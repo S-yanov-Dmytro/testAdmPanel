@@ -83,7 +83,7 @@ function App() {
     try {
       const { data } = await axios.get(`${API_BASE}/orders`, {
         headers: { Authorization: `Bearer ${token}` },
-        timeout: 10000
+        timeout: 35000
       });
 
       if (!data.orders || !data.analytics) {

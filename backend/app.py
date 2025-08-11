@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 import requests
-from datetime import datetime, timedelta
+from datetime import datetime
+from config import API_URL, VALID_LOGIN, VALID_PASSWORD, AUTH_TOKEN, API_KEY
 from flask_cors import CORS
 from functools import lru_cache
 import time
@@ -8,12 +9,6 @@ import time
 app = Flask(__name__)
 CORS(app)
 
-API_URL = "https://uzshopping.retailcrm.ru/api/v5/orders"
-API_KEY = "f6pp7FGF3FMS3ufIPEvhvThsgqmWL9XX"
-
-VALID_LOGIN = "admin"
-VALID_PASSWORD = "12345"
-AUTH_TOKEN = "mysecrettoken123"
 
 @lru_cache(maxsize=1)
 def get_cached_orders():
@@ -24,7 +19,7 @@ def get_cached_orders():
         params = {'apiKey': API_KEY, 'limit': 100, 'page': page}
         try:
             start_time = time.time()
-            resp = requests.get(API_URL, params=params, timeout=10)
+            resp = requests.get(API_URL, params=params, timeout=35)
 
             if resp.status_code != 200:
                 break
